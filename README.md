@@ -1,10 +1,13 @@
 # cpp first app
 
-# Первая сборка и запуск
+```sh
 ./run.sh --run
+```
 
-# Release-сборка
+```sh
 ./run.sh --release
+```
 
-# Очистка проекта
+```sh
 ./run.sh clean
+```
