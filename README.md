@@ -1,34 +1,13 @@
-# C++ First App Build Instructions
+mkdir -p build && cd build
 
-## Установка прав на выполнение скрипта
-sudo chmod +x bld
+cmake .. \
+  -G Ninja \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld" \
+  -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON # LTO
 
-## 🏗️ Инициализация проекта
+ninja -j$(nproc)
 
-- **Debug-сборка:**
-  ./bld setup
-
-- **Release-сборка:**
-  ./bld setup --release
-
-## 🔧 Сборка проекта
-./bld build
-
-## ▶️ Сборка и запуск
-./bld run
-
-## ⚙️ Изменение конфигурации
-./bld config --buildtype=release -Dcpp_std=c++23
-
-## 🧹 Очистка объектных файлов
-./bld clean
-
-## 💥 Полное удаление сборки
-./bld purge
-
-## 📦 Установка программы
-./bld install
-
-## ℹ️ Показать справку
-./bld help
-
+./audiofx-cpp
