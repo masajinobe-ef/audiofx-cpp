@@ -9,7 +9,6 @@ bool AudioConverter::convert(const std::string &inputPath,
   std::memset(&inInfo, 0, sizeof(inInfo));
   std::memset(&outInfo, 0, sizeof(outInfo));
 
-  // Открываем входной файл
   SNDFILE *inFile = sf_open(inputPath.c_str(), SFM_READ, &inInfo);
   if (!inFile) {
     std::cerr << "Error opening input file: " << sf_strerror(nullptr)
@@ -17,12 +16,10 @@ bool AudioConverter::convert(const std::string &inputPath,
     return false;
   }
 
-  // Настраиваем выходной формат (16-bit WAV)
   outInfo.samplerate = inInfo.samplerate;
   outInfo.channels = inInfo.channels;
   outInfo.format = SF_FORMAT_WAV | SF_FORMAT_PCM_16;
 
-  // Создаём выходной файл
   SNDFILE *outFile = sf_open(outputPath.c_str(), SFM_WRITE, &outInfo);
   if (!outFile) {
     std::cerr << "Error opening output file: " << sf_strerror(nullptr)
@@ -31,7 +28,6 @@ bool AudioConverter::convert(const std::string &inputPath,
     return false;
   }
 
-  // Конвертация данных
   constexpr size_t BUFFER_SIZE = 4096;
   std::vector<short> buffer(BUFFER_SIZE * outInfo.channels);
 
