@@ -1,45 +1,34 @@
 project('cpp-first-app', 'cpp',
   version: '1.0',
   default_options: [
-    'cpp_std=c++17',
+    'cpp_std=c++20',
     'warning_level=3',
-    'werror=false',
+    'werror=true',
+    'buildtype=debug',
+    'default_library=static',
     'b_ndebug=if-release',
+    'b_lto=true'
   ])
 
 compiler = meson.get_compiler('cpp')
-compiler_id = compiler.get_id()
-if compiler_id != 'clang'
-  warning('Используется компилятор: ' + compiler_id)
-  message('Рекомендуется использовать Clang для сборки')
-endif
 
-sources = files(
-  'src/main.cpp',
+src_files = ['src/main.cpp']
+
+executable(
+  meson.project_name(),
+  src_files,
+  install: true,
+  cpp_args: ['-fcolor-diagnostics'],
 )
 
-cflags = []
+message('\n⚙️  Конфигурация:')
+message('----------------------')
+message('Тип сборки:    ' + get_option('buildtype'))
+message('Стандарт C++:  ' + get_option('cpp_std'))
+message('Исходников:    ' + '1')
+message('Директория:    ' + meson.current_build_dir())
+message('----------------------\n')
 
-build_type = get_option('buildtype')
-if build_type == 'debug'
-  cflags += ['-g', '-O0']
-  message('Сборка в DEBUG режиме')
-elif build_type == 'release'
-  cflags += ['-O3', '-DNDEBUG']
-  message('Сборка в RELEASE режиме')
+if get_option('buildtype') == 'debug'
+  message('💡 Совет: Для release-сборки используйте: meson configure ' + meson.current_build_dir() + ' --buildtype=release')
 endif
-
-cflags += [
-  '-Wall',
-  '-Wextra',
-  '-Wpedantic'
-]
-
-executable(meson.project_name(),
-  sources,
-  install: false,
-  cpp_args: cflags,
-  dependencies: [
-    #
-    ]
-)

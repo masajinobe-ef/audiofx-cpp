@@ -1,9 +1,6 @@
 #include <iostream>
 
 int main() {
-  int number;
-  std::cout << "Enter an integer: ";
-  std::cin >> number;
-  std::cout << "You entered: " << number << '\n';
+  std::cout << "\n✅ Программа на C++ со сборщиком Meson + Bash\n";
   return 0;
 }
